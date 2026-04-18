@@ -14,8 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # - name: Apply src/tests patch
-      #   run: git apply patch/src-tests.patch
+      - name: Apply src/tests patch
+        run: |
+          git apply --check patch/src-tests.patch
+          git apply patch/src-tests.patch
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
