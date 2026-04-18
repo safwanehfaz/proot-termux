@@ -1,0 +1,26 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Test
+        run: |
+          docker build -t proot-ci .
+          docker run --rm proot-ci bash -c "
+            make -C src loader.exe loader-m32.exe build.h && \
+            make -C src proot && \
+            env PATH=/bin:/usr/bin:/sbin:/usr/sbin:\$PWD/src make -C tests
+          "
