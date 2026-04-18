@@ -9,13 +9,13 @@ RUN apt-get update -qq && \
     libtalloc-dev \
     gdb \
     strace \
-    realpath \
+    coreutils \
     python3-pip \
     curl \
     git && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install cpp-coveralls
+RUN pip3 install --no-cache-dir --break-system-packages cpp-coveralls
 
 WORKDIR /app
 
